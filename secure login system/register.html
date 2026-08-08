@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+    <h1>Create Account</h1>
+    <form method="POST" action="{{ url_for('register') }}" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" value="{{ username or '' }}"
+               required minlength="3" maxlength="30" autocomplete="username">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{ email or '' }}"
+               required autocomplete="email">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required minlength="10"
+               autocomplete="new-password">
+        <p class="hint">At least 10 characters, with upper &amp; lower case, a digit, and a special character.</p>
+
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" name="confirm_password" required minlength="10"
+               autocomplete="new-password">
+
+        <button type="submit">Create Account</button>
+    </form>
+    <p class="alt-link">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+{% endblock %}

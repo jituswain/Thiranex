@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Log In{% endblock %}
+{% block content %}
+    <h1>Log In</h1>
+    <form method="POST" action="{{ url_for('login') }}" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required autocomplete="username" autofocus>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+
+        <button type="submit">Log In</button>
+    </form>
+    <p class="alt-link">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+{% endblock %}

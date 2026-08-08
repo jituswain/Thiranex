@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <h1>Welcome, {{ user['username'] }}</h1>
+    <p>You are securely logged in.</p>
+
+    <div class="status-box">
+        <strong>Two-Factor Authentication:</strong>
+        {% if user['is_2fa_enabled'] %}
+            <span class="status-on">Enabled</span>
+        {% else %}
+            <span class="status-off">Not enabled</span>
+        {% endif %}
+    </div>
+
+    {% if not user['is_2fa_enabled'] %}
+        <a class="button-link" href="{{ url_for('setup_2fa') }}">Set up 2FA</a>
+    {% else %}
+        <form method="POST" action="{{ url_for('disable_2fa_route') }}" novalidate class="inline-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <label for="password">Confirm password to disable 2FA</label>
+            <input type="password" id="password" name="password" required autocomplete="current-password">
+            <button type="submit" class="danger">Disable 2FA</button>
+        </form>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('logout') }}" novalidate class="logout-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit">Log Out</button>
+    </form>
+{% endblock %}

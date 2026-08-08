@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Set Up 2FA{% endblock %}
+{% block content %}
+    <h1>Set Up Two-Factor Authentication</h1>
+    <p>In your authenticator app (Google Authenticator, Authy, 1Password, etc.),
+       choose "Enter setup key manually" and enter:</p>
+
+    <div class="secret-box">
+        <strong>Account:</strong> {{ session['username'] }}<br>
+        <strong>Key:</strong> <code>{{ secret }}</code><br>
+        <strong>Type:</strong> Time based<br>
+    </div>
+
+    <p class="hint">Or import this URI directly if your app supports it:<br>
+        <code class="uri">{{ uri }}</code>
+    </p>
+
+    <form method="POST" action="{{ url_for('setup_2fa') }}" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <label for="code">Enter the 6-digit code to confirm</label>
+        <input type="text" id="code" name="code" required pattern="\d{6}" maxlength="6"
+               inputmode="numeric" autocomplete="one-time-code" autofocus>
+        <button type="submit">Enable 2FA</button>
+    </form>
+    <p class="alt-link"><a href="{{ url_for('dashboard') }}">Cancel and go back</a></p>
+{% endblock %}

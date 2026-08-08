@@ -1,0 +1,7 @@
+# Core requirement
+Flask>=3.0
+
+# Optional but recommended: enables Argon2id password hashing (OWASP's
+# top recommendation) instead of the built-in scrypt fallback.
+# The app auto-detects this at startup -- no code changes needed.
+argon2-cffi>=23.1
